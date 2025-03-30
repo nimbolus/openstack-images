@@ -1,10 +1,10 @@
 - imagename: ubuntu-noble-amd64.qcow2
   arch: amd64
+  no-tmpfs: true
   types:
     - qcow2
   environment:
     DIB_RELEASE: noble
-  no-tmpfs: true
   elements:
     - vm
     - ubuntu-minimal
@@ -15,11 +15,11 @@
 
 - imagename: ubuntu-noble-arm64.qcow2
   arch: arm64
+  no-tmpfs: true
   types:
     - qcow2
   environment:
     DIB_RELEASE: noble
-  no-tmpfs: true
   elements:
     - vm
     - ubuntu-minimal

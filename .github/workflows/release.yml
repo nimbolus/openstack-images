@@ -1,0 +1,124 @@
+name: release
+
+on:
+  schedule:
+    - cron: "0 0 1 * *" # every first day of the month
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - image_config: debian
+          - image_config: rocky-linux
+          - image_config: ubuntu
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python3 -m venv venv
+          venv/bin/pip install -U pip
+          venv/bin/pip install -r diskimage-builder/requirements.txt
+          sudo apt update
+          sudo apt install -y procps qemu-utils qemu-user-static squashfs-tools debootstrap gdisk kpartx dosfstools podman uidmap fuse-overlayfs
+
+      - name: Run diskimage-builder
+        env:
+          IMAGE_CONFIG: ${{ matrix.image_config }}
+        run: |
+          source venv/bin/activate
+          diskimage-builder images/${IMAGE_CONFIG}.yml
+          sha256sum *.qcow2 > ${IMAGE_CONFIG}.sha256
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.image_config }}
+          path: |
+            *.qcow2
+            *.sha256
+
+  tag:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Create tag
+        id: tagname
+        run: |
+          tag=$(date -u +'%Y-%m-%dT%H-%M-%SZ')
+          echo "TAGNAME=$tag" >> $GITHUB_OUTPUT
+
+      - name: Create tag
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/${{ steps.tagname.outputs.TAGNAME}}',
+              sha: context.sha
+            })
+
+      - name: Create draft release
+        id: draft_release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tagname.outputs.TAGNAME }}
+          draft: true
+    outputs:
+      tag_name: ${{ steps.tagname.outputs.TAGNAME }}
+      release_id: ${{ steps.draft_release.outputs.id }}
+
+  release:
+    needs: tag
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    strategy:
+      matrix:
+        include:
+          - image_config: debian
+          - image_config: rocky-linux
+          - image_config: ubuntu
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: ${{ matrix.image_config }}
+
+      - name: Attach artifacts
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.tag.outputs.tag_name }}
+          draft: true
+          files: |
+            ${{ matrix.image_config }}/*.qcow2
+            ${{ matrix.image_config }}/*.sha256
+
+  publish:
+    needs: [tag, release]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.repos.updateRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{ needs.tag.outputs.release_id }},
+              draft: false
+            })
