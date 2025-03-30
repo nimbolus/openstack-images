@@ -17,8 +17,9 @@ podman build -t diskimage-builder diskimage-builder
 Build image:
 ```sh
 podman run --rm -it --privileged \
-    -v $PWD:/home/builder/openstack-images diskimage-builder \
-    diskimage-builder openstack-images/images/debian.yml
+    -v $PWD:/home/builder/openstack-images \
+    -w /home/builder/openstack-images diskimage-builder \
+    diskimage-builder images/debian.yml
 ```
 
 ### GitHub Workflow

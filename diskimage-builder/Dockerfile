@@ -13,7 +13,9 @@ RUN apt-get install -y --no-install-recommends python3-venv \
 USER builder
 WORKDIR /home/builder
 
+COPY requirements.txt requirements.txt
+
 RUN python3 -m venv dib \
     && dib/bin/pip install -U pip \
-    && dib/bin/pip install setuptools diskimage-builder \
+    && dib/bin/pip install -r requirements.txt \
     && echo "source \$HOME/dib/bin/activate" >> .bashrc
