@@ -1,0 +1,29 @@
+- imagename: ubuntu-noble-amd64.qcow2
+  arch: amd64
+  types:
+    - qcow2
+  environment:
+    DIB_RELEASE: noble
+  no-tmpfs: true
+  elements:
+    - vm
+    - ubuntu-minimal
+    - cloud-init
+    - autoupdates
+  packages:
+    - qemu-guest-agent
+
+- imagename: ubuntu-noble-arm64.qcow2
+  arch: arm64
+  types:
+    - qcow2
+  environment:
+    DIB_RELEASE: noble
+  no-tmpfs: true
+  elements:
+    - vm
+    - ubuntu-minimal
+    - cloud-init
+    - autoupdates
+  packages:
+    - qemu-guest-agent

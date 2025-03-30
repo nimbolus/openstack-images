@@ -1,0 +1,46 @@
+name: build-image
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_config:
+        type: string
+        description: "Image config file (e.g. 'debian')"
+        default: debian
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python3 -m venv venv
+          venv/bin/pip install -U pip
+          venv/bin/pip install -r diskimage-builder/requirements.txt
+          sudo apt update
+          sudo apt install -y procps qemu-utils qemu-user-static squashfs-tools debootstrap gdisk kpartx dosfstools podman uidmap fuse-overlayfs
+
+      - name: Run diskimage-builder
+        env:
+          IMAGE_CONFIG: ${{ inputs.image_config }}
+        run: |
+          source venv/bin/activate
+          diskimage-builder images/${IMAGE_CONFIG}.yml
+          sha256sum *.qcow2 > ${IMAGE_CONFIG}.sha256
+
+      - name: Upload image
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.image_config }}
+          path: |
+            *.qcow2
+            *.sha256

@@ -1,0 +1,29 @@
+- imagename: debian-12-amd64.qcow2
+  arch: amd64
+  no-tmpfs: true
+  types:
+    - qcow2
+  environment:
+    DIB_RELEASE: bookworm
+  elements:
+    - vm
+    - debian-minimal
+    - cloud-init
+    - autoupdates
+  packages:
+    - qemu-guest-agent
+
+- imagename: debian-12-arm64.qcow2
+  arch: arm64
+  no-tmpfs: true
+  types:
+    - qcow2
+  environment:
+    DIB_RELEASE: bookworm
+  elements:
+    - vm
+    - debian-minimal
+    - cloud-init
+    - autoupdates
+  packages:
+    - qemu-guest-agent
