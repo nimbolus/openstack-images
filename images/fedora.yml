@@ -1,0 +1,29 @@
+- imagename: fedora-24-amd64.qcow2
+  arch: amd64
+  no-tmpfs: true
+  types:
+    - qcow2
+  environment:
+    DIB_RELEASE: Generic-41-1.4
+  elements:
+    - vm
+    - fedora
+    - cloud-init
+    - autoupdates
+  packages:
+    - qemu-guest-agent
+
+- imagename: fedora-24-arm64.qcow2
+  arch: arm64
+  no-tmpfs: true
+  types:
+    - qcow2
+  environment:
+    DIB_RELEASE: Generic-41-1.4
+  elements:
+    - vm
+    - fedora
+    - cloud-init
+    - autoupdates
+  packages:
+    - qemu-guest-agent
