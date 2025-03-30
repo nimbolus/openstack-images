@@ -7,7 +7,7 @@ RUN apt-get update \
     && echo "builder ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/010_builder-nopasswd
 
 RUN apt-get install -y --no-install-recommends python3-venv \
-    procps qemu-utils qemu-user-static squashfs-tools debootstrap gdisk kpartx dosfstools \
+    procps qemu-utils qemu-user-static squashfs-tools debootstrap gdisk kpartx dosfstools e2fsprogs \
     podman uidmap fuse-overlayfs
 
 USER builder
