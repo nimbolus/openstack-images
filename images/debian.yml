@@ -8,6 +8,7 @@
   elements:
     - vm
     - debian-minimal
+    - block-device-efi
     - cloud-init
     - autoupdates
   packages:
@@ -23,6 +24,7 @@
   elements:
     - vm
     - debian-minimal
+    - block-device-efi
     - cloud-init
     - autoupdates
   packages:
