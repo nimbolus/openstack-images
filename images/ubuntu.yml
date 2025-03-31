@@ -4,6 +4,7 @@
     - qcow2
   environment:
     DIB_RELEASE: noble
+    DIB_UBUNTU_KERNEL: linux-image-kvm
   elements:
     - vm
     - ubuntu-minimal
