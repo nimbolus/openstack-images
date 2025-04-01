@@ -24,3 +24,4 @@
     - iptables
     - ssh-import-id
     - screen
+    - htop
