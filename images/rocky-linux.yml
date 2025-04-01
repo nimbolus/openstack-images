@@ -10,5 +10,6 @@
     - block-device-efi
     - cloud-init
     - autoupdates
+    - disable-firewall
   packages:
     - qemu-guest-agent
