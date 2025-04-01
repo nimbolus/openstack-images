@@ -5,11 +5,22 @@
   environment:
     DIB_RELEASE: noble
     DIB_UBUNTU_KERNEL: linux-image-kvm
+    DIB_CLOUD_INIT_DATASOURCES: "ConfigDrive, OpenStack"
   elements:
     - vm
     - ubuntu-minimal
     - block-device-efi
     - cloud-init
+    - cloud-init-datasources
     - autoupdates
+    - openssh-server
   packages:
     - qemu-guest-agent
+    - vim-tiny
+    - tcpdump
+    - traceroute
+    - iputils-ping
+    - bind9-dnsutils
+    - iptables
+    - ssh-import-id
+    - screen

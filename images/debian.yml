@@ -4,11 +4,22 @@
     - qcow2
   environment:
     DIB_RELEASE: bookworm
+    DIB_CLOUD_INIT_DATASOURCES: "ConfigDrive, OpenStack"
   elements:
     - vm
-    - debian-minimal
+    - debian
     - block-device-efi
     - cloud-init
+    - cloud-init-datasources
     - autoupdates
+    - systemd-resolved
   packages:
     - qemu-guest-agent
+    - vim-tiny
+    - tcpdump
+    - traceroute
+    - iputils-ping
+    - bind9-dnsutils
+    - iptables
+    - ssh-import-id
+    - screen

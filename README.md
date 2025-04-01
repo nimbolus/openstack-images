@@ -19,6 +19,7 @@ Build image:
 podman run --rm -it --privileged \
     -v $PWD:/home/builder/openstack-images \
     -w /home/builder/openstack-images diskimage-builder \
+    -e ELEMENTS_PATH=/home/builder/openstack-images/elements \
     diskimage-builder images/debian.yml
 ```
 

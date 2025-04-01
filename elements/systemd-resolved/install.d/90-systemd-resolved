@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ ${DIB_DEBUG_TRACE:-1} -gt 0 ]; then
+    set -x
+fi
+set -eu
+set -o pipefail
+
+# backup nameservers
+cp /etc/resolv.conf /etc/resolv.conf.bak
+
+apt-get install -y systemd-resolved
+
+# preserve nameservers while in chroot
+mv /etc/resolv.conf /etc/resolv.conf.ORIG
+mv /etc/resolv.conf.bak /etc/resolv.conf

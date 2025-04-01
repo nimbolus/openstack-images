@@ -34,6 +34,7 @@ jobs:
           IMAGE_CONFIG: ${{ inputs.image_config }}
         run: |
           source venv/bin/activate
+          export ELEMENTS_PATH=$PWD/elements
           diskimage-builder images/${IMAGE_CONFIG}.yml
           sha256sum *.qcow2 > ${IMAGE_CONFIG}.sha256
 
