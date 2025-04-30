@@ -9,6 +9,7 @@
     - rocky-container
     - block-device-efi
     - cloud-init
+    - growroot
     - autoupdates
     - disable-firewall
   packages:
