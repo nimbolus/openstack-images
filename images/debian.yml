@@ -13,6 +13,7 @@
     - cloud-init-datasources
     - autoupdates
     - systemd-resolved
+    - toolchain
   packages:
     - qemu-guest-agent
     - vim-tiny

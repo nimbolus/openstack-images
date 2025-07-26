@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if [ ${DIB_DEBUG_TRACE:-1} -gt 0 ]; then
+    set -x
+fi
+set -eu
+set -o pipefail
+
+if [[ $DISTRO_NAME =~ (ubuntu|debian)$ ]]; then
+    apt-get install -y python3-venv
+elif [[ $DISTRO_NAME =~ (centos|rocky|rhel|openeuler)$ ]]; then
+    dnf install -y python3
+else
+    echo "The 'toolchain' element does not support this distribution."
+    echo "Exiting"
+    exit 1
+fi
+
+export LC_ALL=C.UTF-8
+export LANG=C.UTF-8
+
+python3 -m venv /opt/toolchain
+/opt/toolchain/bin/pip install -U pip wheel
+/opt/toolchain/bin/pip install ansible-core python-openstackclient python-barbicanclient
+/opt/toolchain/bin/ansible-galaxy collection install openstack.cloud ansible.posix
