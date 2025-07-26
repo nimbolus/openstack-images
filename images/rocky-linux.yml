@@ -12,5 +12,6 @@
     - growroot
     - autoupdates
     - disable-firewall
+    - toolchain
   packages:
     - qemu-guest-agent
