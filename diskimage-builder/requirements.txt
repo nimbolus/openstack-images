@@ -1,2 +1,2 @@
-diskimage-builder==3.37.0
-setuptools==78.1.0
+diskimage-builder==3.39.0
+setuptools==80.9.0
