@@ -1,3 +1,31 @@
+- imagename: debian-13-amd64.qcow2
+  no-tmpfs: true
+  types:
+    - qcow2
+  environment:
+    DIB_RELEASE: trixie
+    DIB_CLOUD_INIT_DATASOURCES: "ConfigDrive, OpenStack"
+  elements:
+    - vm
+    - debian
+    - block-device-efi
+    - cloud-init
+    - cloud-init-datasources
+    - autoupdates
+    - systemd-resolved
+    - toolchain
+  packages:
+    - qemu-guest-agent
+    - vim-tiny
+    - tcpdump
+    - traceroute
+    - iputils-ping
+    - bind9-dnsutils
+    - iptables
+    - ssh-import-id
+    - screen
+    - htop
+
 - imagename: debian-12-amd64.qcow2
   no-tmpfs: true
   types:
