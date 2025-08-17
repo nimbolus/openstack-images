@@ -26,3 +26,4 @@
     - ssh-import-id
     - screen
     - htop
+    - git
