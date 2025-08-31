@@ -7,9 +7,9 @@ set -eu
 set -o pipefail
 
 if [[ $DISTRO_NAME =~ (ubuntu|debian)$ ]]; then
-    apt-get install -y python3-venv
+    apt-get install -y python3-venv git
 elif [[ $DISTRO_NAME =~ (centos|rocky|rhel|openeuler)$ ]]; then
-    dnf install -y python3
+    dnf install -y python3 git
 else
     echo "The 'toolchain' element does not support this distribution."
     echo "Exiting"
