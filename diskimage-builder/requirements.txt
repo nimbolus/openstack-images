@@ -1,2 +1,2 @@
-diskimage-builder==3.39.0
+diskimage-builder @ git+https://github.com/openstack/diskimage-builder.git@43381184423c185801b5e24f5f3e1e40bb7496f8
 setuptools==80.9.0
