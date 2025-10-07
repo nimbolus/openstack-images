@@ -1,12 +1,12 @@
-FROM docker.io/debian:sid
+FROM docker.io/ubuntu:24.04
 
 RUN apt-get update \
     && apt-get install -y sudo \
-    && groupadd -g 1000 builder \
-    && useradd -u 1000 -g 1000 -m -s /bin/bash builder \
+    && groupadd -g 2000 builder \
+    && useradd -u 2000 -g 2000 -m -s /bin/bash builder \
     && echo "builder ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/010_builder-nopasswd
 
-RUN apt-get install -y --no-install-recommends python3-venv \
+RUN apt-get install -y --no-install-recommends python3-venv git \
     procps qemu-utils qemu-user-static squashfs-tools debootstrap gdisk kpartx dosfstools e2fsprogs \
     podman uidmap fuse-overlayfs
 
