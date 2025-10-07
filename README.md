@@ -18,14 +18,16 @@ Build image:
 ```sh
 podman run --rm -it --privileged \
     -v $PWD:/home/builder/openstack-images \
-    -w /home/builder/openstack-images diskimage-builder \
+    -w /home/builder/openstack-images \
     -e ELEMENTS_PATH=/home/builder/openstack-images/elements \
-    diskimage-builder images/debian.yml
+    diskimage-builder bash
+
+(dib) builder@dib:~/openstack-images$ diskimage-builder images/debian.yml
 ```
 
 ### GitHub Workflow
 
-![build-image](https://github.com/nimbolus/openstack-images/actions/workflows/build.yml/badge.svg)
+[![release](https://github.com/nimbolus/openstack-images/actions/workflows/release.yml/badge.svg)](https://github.com/nimbolus/openstack-images/actions/workflows/release.yml)
 
 Go to [Actions](https://github.com/nimbolus/openstack-images/actions/workflows/build.yml) and click on `Run workflow`.
 
