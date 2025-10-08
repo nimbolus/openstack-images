@@ -16,6 +16,7 @@
     - toolchain
   packages:
     - qemu-guest-agent
+    - netplan.io
     - vim-tiny
     - tcpdump
     - traceroute
