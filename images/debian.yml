@@ -13,6 +13,7 @@
     - cloud-init-datasources
     - autoupdates
     - systemd-resolved
+    - openssh-hardening
     - toolchain
   packages:
     - qemu-guest-agent
@@ -42,6 +43,7 @@
     - cloud-init-datasources
     - autoupdates
     - systemd-resolved
+    - openssh-hardening
     - toolchain
   packages:
     - qemu-guest-agent
